@@ -50,3 +50,32 @@ class Lista:
                 if item.id == sended_id:
                     item = data
         return False
+
+    def exportar(self, ruta):
+        with open(ruta, 'w') as file:
+            import json
+            json.dump(self.convertir_a_diccionario(), file, indent=4)
+        return True
+
+
+    def convertir_json_objeto(self, data):
+        if self.es_lista:
+            self.lista = []
+            for item in data:
+                if 'lista' in item:
+                    del item['lista']
+                if 'es_lista' in item:
+                    del item['es_lista']
+                self.lista.append(self.__class__(**item))
+        else:
+            for key, value in data.items():
+                setattr(self, key, value)
+        return True
+
+
+    def importar(self, ruta):
+        with open(ruta, 'r') as file:
+            import json
+            data = json.load(file)
+
+            return self.convertir_json_objeto(data)
