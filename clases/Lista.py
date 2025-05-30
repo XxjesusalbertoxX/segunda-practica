@@ -10,6 +10,12 @@ class Lista:
         else:
             return vars(self)
 
+
+
+
+
+
+
     def mostrar(self):
         if self.lista:
             print("Numero de Items:" + str(len(self.lista)))
