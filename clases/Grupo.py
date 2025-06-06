@@ -23,19 +23,55 @@ class Grupo(Lista):
             return f"Grupo: {self.Nombre}, Maestro: {self.Maestro}, Alumnos: {self.Alumnos}"
         else:
             return "Numero de Grupos " + str(len(self.lista))
-        
-    @classmethod
-    def from_dict(cls, data):
-        if isinstance(data, list):
-            return super().from_dict(data)
-        maestro = Maestro.from_dict(data['Maestro'])
-        alumnos = Alumno()
-        for alumno_dict in data['Alumnos']:
-            alumnos.agregar(Alumno.from_dict(alumno_dict))
-        return cls(data['Nombre'], maestro, alumnos)
+
+    def convertir_json_objeto(self, data):
+        if self.es_lista:
+            self.lista = []
+            for item in data:
+                nuevo_grupo=Grupo()
+                nuevo_grupo.es_lista = False
+                nuevo_grupo=nuevo_grupo.convertir_json_objeto(item)
+                self.lista.append(nuevo_grupo)
+        else:
+
+            self.Nombre = data.get('Nombre')
+
+            maestro_dict = data.get('Maestro', {})
+            if not hasattr(self, 'Maestro'):
+                self.Maestro = Maestro()
+                self.Maestro.es_lista = False
+                self.Maestro.convertir_json_objeto(maestro_dict)
+
+            alumnos_lista = Alumno()
+            alumnos_lista.es_lista = True
+            alumnos_lista.convertir_json_objeto(data.get('Alumnos', []))
+            self.Alumnos = alumnos_lista
+            grup = Grupo(self.Nombre, self.Maestro, self.Alumnos)
+            return grup
+
+
+
+
+    def convertir_a_diccionario(self):
+        if self.lista:
+            grupos_diccionario = []
+            for item in self.lista:
+                print(item)
+                grupos_diccionario.append(item.convertir_a_diccionario())
+            return grupos_diccionario
+
+        else:
+            alumnos_diccionario = self.Alumnos.convertir_a_diccionario()
+            return {
+                "Nombre": self.Nombre,
+                "Maestro": vars(self.Maestro),
+                "Alumnos": alumnos_diccionario
+            }
+
+
 
 if __name__ == "__main__":
-    
+    """
     maestro1 = Maestro(1, "Carlos", "Sánchez", 35, "Matemáticas")
     maestro2 = Maestro(1, "Juanito", "sola", 35, "Español")
     maestro3 = Maestro(1, "Carlos", "Pedro", 35, "Ingles")
@@ -44,28 +80,27 @@ if __name__ == "__main__":
     a3 = Alumno(3, "Luis", "Martínez", 21, "789012")
 
     alumnos = Alumno()
-    alumnos.agregar(a1)
-    alumnos.agregar(a2)
-    alumnos.agregar(a3)
-    g1 = Grupo("Grupo A", maestro1, alumnos)
-    g2 = Grupo("Grupo B", maestro2, alumnos)
-    
-    
-    grupos = Grupo()    ##grupos.mostrar()
-    grupos.agregar(g1)
-    grupos.agregar(g2)
+    alumnos.agregar(alumno1)
+    alumnos.agregar(alumno2)
+    alumnos.agregar(alumno3)
+    grupo = Grupo("Grupo A", maestro1, alumnos)
+    grupo2 = Grupo("Grupo B", maestro1, alumnos)
+    grupos = Grupo()
+    grupos.agregar(grupo)
+    grupos.agregar(grupo2)
+    grupo.mostrar()
+    grupos.mostrar()
 
-    grupo = Grupo.cargar_desde_json(r"grupos/grupos.json")
-    grupo.guardar_en_json(r"grupos/unonuevo.json")
-    
-    
-    # grpos = Grupo()
-    # grpos = Grupo.cargar_desde_json(r"grupos/grupowardadonuevo2.json")
-    # grpos.mostrar()
+    grupo.exportar("registros/grupo1.json")
+    grupos.exportar("registros/grupos1.json")
 
-    
-    # grupos_cargados.guardar_en_json(r"grupos/grupos2.json")
-    # grupos_cargados.cargar_desde_json(r"grupos/grupos2.json")
-    # grupos_cargados.guardar_en_json(r"grupos/grupos3.json")
-    # grupos_cargados.cargar_desde_json(r"grupos/grupos3.json")
-    # grupos_cargados.mostrar()
+    nuevo_grupo = Grupo("Grupo Z", maestro1, alumnos)
+    nuevo_grupo.importar("registros/grupo1.json")
+    """
+    nuevos_grupos = Grupo()
+    nuevos_grupos.importar("registros/grupos1.json")
+    print("El nuevo grupo es")
+    print("Los nuevos grupos son")
+    nuevos_grupos.mostrar()
+
+    nuevos_grupos.exportar("registros/grupooooooos.json")

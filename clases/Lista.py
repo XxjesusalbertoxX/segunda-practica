@@ -42,25 +42,19 @@ class Lista:
                 item.convertir_a_diccionario() for item in self.lista
             ]
         else:
-            result = {}
-            for k, v in vars(self).items():
-                if k in ("lista", "es_lista"): 
-                    continue
-                if isinstance(v, list):
-                    result[k] = [
-                        item.convertir_a_diccionario() for item in v
-                    ]
-                elif hasattr(v, "convertir_a_diccionario"):
-                    # Si el valor es un objeto personalizado, lo convierte recursivamente
-                    result[k] = v.convertir_a_diccionario()
-                else:
-                    result[k] = v
-            return result
+            return vars(self)
 
-    def guardar_en_json(self, filename):
-        json_data = self.convertir_a_diccionario()
-        if not os.path.isabs(filename): # eso verifica si la ruta es absoluta o no true/false
-            path = os.path.join(os.path.dirname(__file__), filename) # si no es absoluta, la convierte en una ruta absoluta
+
+
+
+
+
+
+    def mostrar(self):
+        if self.lista:
+            print("Numero de Items:" + str(len(self.lista)))
+            #for item in self.lista:
+            #    item.mostrar()
         else:
             path = filename
         with open(path, "w", encoding="utf-8") as f:
@@ -96,3 +90,32 @@ class Lista:
                 if item.id == sended_id:
                     item = data
         return False
+
+    def exportar(self, ruta):
+        with open(ruta, 'w') as file:
+            import json
+            json.dump(self.convertir_a_diccionario(), file, indent=4)
+        return True
+
+
+    def convertir_json_objeto(self, data):
+        if self.es_lista:
+            self.lista = []
+            for item in data:
+                if 'lista' in item:
+                    del item['lista']
+                if 'es_lista' in item:
+                    del item['es_lista']
+                self.lista.append(self.__class__(**item))
+        else:
+            for key, value in data.items():
+                setattr(self, key, value)
+        return True
+
+
+    def importar(self, ruta):
+        with open(ruta, 'r') as file:
+            import json
+            data = json.load(file)
+
+            return self.convertir_json_objeto(data)

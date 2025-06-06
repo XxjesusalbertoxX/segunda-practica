@@ -39,21 +39,33 @@ class Alumno(Lista):
     
             
 if __name__ == "__main__":
-    # a1 = Alumno(1,"Juan", "Pérez", 20, "123456")
-    # a2 = Alumno(2,"Ana", "Gómez", 22, "654321")
-    # a3 = Alumno(3,"Luis", "Martínez", 21, "789012")
-    # alumnos = Alumno()
-    # alumnos.agregar(a1)
-    # alumnos.agregar(a2)
-    # alumnos.agregar(a3)
-    # a1.mostrar()
+    """
+    alumno = Alumno(1,"Juan", "Pérez", 20, "123456")
+    alumno2 = Alumno(2,"Ana", "Gómez", 22, "654321")
+    alumno3 = Alumno(3,"Luis", "Martínez", 21, "789012")
+    """
+    alumnos = Alumno()
+    """
+    alumnos.agregar(alumno)
+    alumnos.agregar(alumno2)
+    alumnos.agregar(alumno3)
+    alumno.mostrar()
+    alumnos.mostrar()
+    alumnos.mostrar_uno(3)
+    alumno.exportar("registros/alumno1.json")
+    alumnos.exportar("registros/alumnos1.json")
+    nuevo_alumno = Alumno(4, "Maria", "Lopez", 19, "345678")
+    print("el nuevo alumno es")
+    nuevo_alumno.importar("registros/alumno1.json")
+    print(nuevo_alumno)
+    """
+    nuevos_alumnos = Alumno()
+    nuevos_alumnos.importar("registros/alumnos1.json")
+    print("los nuevos alunos son")
+    nuevos_alumnos.mostrar()
+    alumno = Alumno(1,"Juan", "Pérez", 20, "123456")
+    nuevos_alumnos.agregar(alumno)
+    nuevos_alumnos.exportar("registros/alumnos2.json")
 
-    alumnos2 = Alumno()
-    alumnos2 = alumnos2.cargar_desde_json(r"alumnos/alumnos.json")
-    a1 = Alumno(4,"Juan", "Pérez", 20, "123456")
-    alumnos2.agregar(a1)
 
 
-    alumnos2.guardar_en_json(r"alumnos/alumnos.json")
-    # alumnos2.mostrar()
-    ## alumnos.mostrar()
