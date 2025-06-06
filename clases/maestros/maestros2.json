@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "nombre": "Carlos",
+    "apellido": "Sánchez",
+    "edad": 35,
+    "especialidad": "Frances"
+  },
+  {
+    "id": 2,
+    "nombre": "Ana",
+    "apellido": "Gómez",
+    "edad": 30,
+    "especialidad": "Física"
+  },
+  {
+    "id": 3,
+    "nombre": "Luis",
+    "apellido": "Martínez",
+    "edad": 40,
+    "especialidad": "Química"
+  }
+]
