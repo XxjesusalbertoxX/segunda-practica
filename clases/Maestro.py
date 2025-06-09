@@ -35,18 +35,18 @@ class Maestro(Lista):
         )
 
 if __name__ == "__main__":
-    # m1 = Maestro(1, "Carlos", "Sánchez", 35, "Frances")
-    # m2 = Maestro(2, "Ana", "Gómez", 30, "Física")
-    # m3 = Maestro(3, "Luis", "Martínez", 40, "Química")
-    # maestros = Maestro()
-    # maestros.agregar(m1)
-    # maestros.agregar(m2)
-    # maestros.agregar(m3)
+    m1 = Maestro(1, "Carlos", "Sánchez", 35, "Frances")
+    m2 = Maestro(2, "Ana", "Gómez", 30, "Física")
+    m3 = Maestro(3, "Luis", "Martínez", 40, "Química")
+    maestros = Maestro()
+    maestros.agregar(m1)
+    maestros.agregar(m2)
+    maestros.agregar(m3)
     # maestros.mostrar_uno(3)
     # maestros.mostrar()
 
 
-    # maestros.guardar_en_json(r"maestros/maestros.json")
+    maestros.guardar_en_json(r"maestros/maestros.json")
 
     # ##funciona por que es un metodo de clase
     # maestros_cargados = Maestro.cargar_desde_json(r"maestros/maestros.json")
