@@ -1,10 +1,10 @@
 [
   {
     "id": 1,
-    "nombre": "Carlos",
-    "apellido": "Sánchez",
-    "edad": 35,
-    "especialidad": "Frances"
+    "nombre": "Jhon",
+    "apellido": "Rodriguez",
+    "edad": 43,
+    "especialidad": "Redes"
   },
   {
     "id": 2,
@@ -19,5 +19,12 @@
     "apellido": "Martínez",
     "edad": 40,
     "especialidad": "Química"
+  },
+  {
+    "id": 5,
+    "nombre": "jesu",
+    "apellido": "ks",
+    "edad": "jd",
+    "especialidad": "jjd"
   }
 ]
